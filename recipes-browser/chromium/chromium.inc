@@ -1,11 +1,12 @@
 LICENSE = "BSD"
-DEPENDS = "xz-native pciutils pulseaudio cairo nss zlib-native libav cups ninja-native gconf libexif pango libdrm"
-
+DEPENDS = "xz-native pciutils pulseaudio cairo nss zlib-native cups ninja-native gconf libexif pango libdrm"
+RDEPENDS_${PN} += "pango cairo fontconfig pciutils pulseaudio freetype fontconfig-utils"
 COMPATIBLE_MACHINE = "(-)"
 COMPATIBLE_MACHINE_x86 = "(.*)"
 COMPATIBLE_MACHINE_x86-64 = "(.*)"
 COMPATIBLE_MACHINE_armv6 = "(.*)"
 COMPATIBLE_MACHINE_armv7a = "(.*)"
+COMPATIBLE_MACHINE_aarch64 = "(.*)"
 
 CHROMIUM_BUILD_TYPE = "Release"
 
@@ -87,6 +88,7 @@ FILES_${PN}-plugin-pdf = "${libdir}/${BPN}/libpdf.so"
 
 FILES_${PN} = "${bindir}/${BPN} ${datadir}/applications ${sbindir}/ ${libdir}/${BPN}/"
 FILES_${PN} += "${bindir} ${libdir}"
+FILES_${PN} += "${bindir}/${BPN}/*.bin"
 FILES_${PN} += "${bindir}/${BPN}/*.pak"
 FILES_${PN} += "${bindir}/${BPN}/locales/*.pak"
 

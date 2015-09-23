@@ -1,0 +1,87 @@
+diff --git a/chrome/chrome_browser.gypi b/chrome/chrome_browser.gypi
+index c71d727..8a70c3d 100644
+--- a/chrome/chrome_browser.gypi
++++ b/chrome/chrome_browser.gypi
+@@ -3562,7 +3562,7 @@
+             '../build/linux/system.gyp:gnome_keyring',
+           ],
+         }],
+-        ['OS=="linux" and chromeos!=1', {
++        ['OS=="linux" and chromeos!=1 and use_ozone!=1', {
+           'sources': [ '<@(chrome_browser_libsecret_sources)' ],
+           'defines': [
+             'USE_LIBSECRET',
+diff --git a/content/common/sandbox_linux/bpf_gpu_policy_linux.cc b/content/common/sandbox_linux/bpf_gpu_policy_linux.cc
+index 2a29d6c..0ffe0b3 100644
+--- a/content/common/sandbox_linux/bpf_gpu_policy_linux.cc
++++ b/content/common/sandbox_linux/bpf_gpu_policy_linux.cc
+@@ -191,7 +191,7 @@ ResultExpr GpuBrokerProcessPolicy::EvaluateSyscall(int sysno) const {
+ #endif  // !defined(__aarch64__)
+     case __NR_faccessat:
+     case __NR_openat:
+-#if !defined(OS_CHROMEOS)
++#if !defined(OS_CHROMEOS) && !defined(__aarch64__)
+     // The broker process needs to able to unlink the temporary
+     // files that it may create. This is used by DRI3.
+     case __NR_unlink:
+diff --git a/third_party/WebKit/Source/wtf/dtoa/bignum.cc b/third_party/WebKit/Source/wtf/dtoa/bignum.cc
+index b3e752a..12aa624 100644
+--- a/third_party/WebKit/Source/wtf/dtoa/bignum.cc
++++ b/third_party/WebKit/Source/wtf/dtoa/bignum.cc
+@@ -107,7 +107,7 @@ namespace double_conversion {
+         const int kMaxUint64DecimalDigits = 19;
+         Zero();
+         int length = value.length();
+-        int pos = 0;
++        unsigned int pos = 0;
+         // Let's just say that each digit needs 4 bits.
+         while (length >= kMaxUint64DecimalDigits) {
+             uint64_t digits = ReadUInt64(value, pos, kMaxUint64DecimalDigits);
+diff --git a/third_party/ffmpeg/ffmpeg.gyp b/third_party/ffmpeg/ffmpeg.gyp
+index 294dd2e..dcc9f19 100755
+--- a/third_party/ffmpeg/ffmpeg.gyp
++++ b/third_party/ffmpeg/ffmpeg.gyp
+@@ -267,7 +267,7 @@
+                 '-fno-omit-frame-pointer',
+               ],
+             }],  # target_arch == "ia32"
+-            ['target_arch == "arm"', {
++            ['target_arch == "arm" or target_arch =="arm64" ', {
+               # On arm we use gcc to compile the assembly.
+               'sources': [
+                 '<@(asm_sources)',
+diff --git a/third_party/mojo/src/mojo/edk/system/unique_identifier.cc b/third_party/mojo/src/mojo/edk/system/unique_identifier.cc
+index 6e036c8..230549e 100644
+--- a/third_party/mojo/src/mojo/edk/system/unique_identifier.cc
++++ b/third_party/mojo/src/mojo/edk/system/unique_identifier.cc
+@@ -25,6 +25,8 @@ UniqueIdentifier UniqueIdentifier::Generate(
+ // static
+ UniqueIdentifier UniqueIdentifier::FromString(const std::string& s,
+                                               bool* success) {
++  #pragma GCC diagnostic push
++  #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+   UniqueIdentifier rv;
+   std::vector<uint8_t> bytes;
+   if (base::HexStringToBytes(s, &bytes) && bytes.size() == sizeof(rv.data_)) {
+@@ -34,6 +36,8 @@ UniqueIdentifier UniqueIdentifier::FromString(const std::string& s,
+     *success = false;
+   }
+   return rv;
++  #pragma GCC diagnostic pop
++
+ }
+ 
+ std::string UniqueIdentifier::ToString() const {
+diff --git a/ui/gfx/image/image_util.cc b/ui/gfx/image/image_util.cc
+index 89a3f8c..6d7bb91 100644
+--- a/ui/gfx/image/image_util.cc
++++ b/ui/gfx/image/image_util.cc
+@@ -78,7 +78,7 @@ bool VisibleMargins(const ImageSkia& image, int* leading, int* trailing) {
+   }
+ 
+   int inner_max = -1;
+-  for (int x = bitmap.width() - 1; x > inner_min; --x) {
++  for (int x = (unsigned int) bitmap.width() - 1; x > inner_min; --x) {
+     for (int y = 0; y < bitmap.height(); ++y) {
+       if (SkColorGetA(bitmap.getColor(x, y)) > kMinimumVisibleOpacity) {
+         inner_max = x;

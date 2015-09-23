@@ -26,7 +26,9 @@ SRC_URI = "\
         ${@bb.utils.contains('PACKAGECONFIG', 'component-build', 'file://component-build.gypi', '', d)} \
         file://google-chrome \
         file://google-chrome.desktop \
+        ${@bb.utils.contains('PACKAGECONFIG', 'test-data', 'http://gsdview.appspot.com/chromium-browser-official/${P}-testdata.tar.xz;name=test-data', '', d)} \
 "
+
 #
 # * use-egl : Without this packageconfig, the Chromium build will use GLX for creating an OpenGL context in X11,
 #             and regular OpenGL for painting operations. Neither are desirable on embedded platforms. With this
@@ -56,6 +58,7 @@ SRC_URI = "\
 #                        Off by default.
 
 # conditionally add ozone-wayland and its patches to the Chromium sources
+PACKAGECONFIG ??= "test-data"
 
 ENABLE_X11 = "${@base_contains('DISTRO_FEATURES', 'x11', '1', '0', d)}"
 # only enable Wayland if X11 isn't already enabled
@@ -78,23 +81,25 @@ OZONE_WAYLAND_PATCH_FILE_GLOB = "*.patch"
 do_unpack[postfuncs] += "${@base_conditional('ENABLE_WAYLAND', '1', 'copy_ozone_wayland_files', '', d)}"
 do_patch[prefuncs] += "${@base_conditional('ENABLE_WAYLAND', '1', 'add_ozone_wayland_patches', '', d)}"
 
-LIC_FILES_CHKSUM = "file://LICENSE;md5=537e0b52077bf0a616d0a0c8a79bc9d5"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=0fca02217a5d49a14dfe2d11837bb34d"
 SRC_URI += "\
         ${@bb.utils.contains('PACKAGECONFIG', 'ignore-lost-context', 'file://chromium-40/0001-Remove-accelerated-Canvas-support-from-blacklist.patch', '', d)} \
         ${@bb.utils.contains('PACKAGECONFIG', 'impl-side-painting', 'file://chromium-40/0002-Add-Linux-to-impl-side-painting-whitelist.patch', '', d)} \
         ${@bb.utils.contains('PACKAGECONFIG', 'disable-api-keys-info-bar', 'file://chromium-40/0003-Disable-API-keys-info-bar.patch', '', d)} \
         file://chromium-40/0004-Remove-hard-coded-values-for-CC-and-CXX.patch \
         file://unistd-2.patch \
+        file://fix_64_bit_builds.patch \
 "
-SRC_URI[md5sum] = "1f5093bd7e435fdebad070e74bfb3438"
-SRC_URI[sha256sum] = "f72fda9ff1ea256ab911610ee532eadf8303137d431f2481d01d3d60e5e64149"
+SRC_URI[md5sum] = "4d33f77537243369e6380f1458217761"
+SRC_URI[sha256sum] = "ad189ea35699224ed4e9cc84fe2dc4b60c5f4257b359e1757af098a6fbc36989"
+
+SRC_URI[test-data.md5sum] = "047cfb627358ad3bc72c570c0e86b50b"
+SRC_URI[test-data.sha256sum] = "2222d737911c5cc09a35e7de2ff498752ceab4f4f0b96898589c7ddd182b4517"
 
 OZONE_WAYLAND_EXTRA_PATCHES += " \
-        file://chromium-40/0005-Remove-X-libraries-from-GYP-files.patch \
-        file://chromium-40/0010-systemd-218.patch \
 "
-OZONE_WAYLAND_GIT_BRANCH = "Milestone-ThanksGiving"
-OZONE_WAYLAND_GIT_SRCREV = "5d7baa9bc3b8c88e9b7e476e3d6bc8cd44a887fe"
+OZONE_WAYLAND_GIT_BRANCH = "master"
+OZONE_WAYLAND_GIT_SRCREV = "b882fe21165fb64a3ea9ab71f5716ed79457ebf1"
 # using 00*.patch to skip the WebRTC patches in ozone-wayland
 # the WebRTC patches remove X11 libraries from the linker flags, which is
 # already done by another patch (see above). Furthermore, to be able to use
@@ -176,8 +181,14 @@ do_configure_append() {
 }
 
 do_compile() {
+        # Workaround for bug:
+        # https://code.google.com/p/chromiumembedded/issues/detail?id=1554
+        V8_MISSING_BINARIES="natives_blob"
         # build with ninja
-        ninja -C ${S}/out/${CHROMIUM_BUILD_TYPE} -j${BB_NUMBER_THREADS} chrome chrome_sandbox
+        ninja -C ${S}/out/${CHROMIUM_BUILD_TYPE} -j${BB_NUMBER_THREADS} chrome chrome_sandbox ${V8_MISSING_BINARIES}
+        # Performance optimisation: strip chrome to avoid OE generating monster
+        # size chome package
+        ${STRIP} ${S}/out/${CHROMIUM_BUILD_TYPE}/chrome
 }
 
 
