@@ -1,5 +1,3 @@
-DEFAULT_PREFERENCE = "-1"
-
 # Recipe files have to perform the following tasks after including this file:
 # 1) Add patches to SRC_URI. Version specific patches should be contained in a
 #    "chromium-XX" subdirectory, where XX is the major version. There are also
@@ -83,25 +81,26 @@ OZONE_WAYLAND_PATCH_FILE_GLOB = "*.patch"
 do_unpack[postfuncs] += "${@base_conditional('ENABLE_WAYLAND', '1', 'copy_ozone_wayland_files', '', d)}"
 do_patch[prefuncs] += "${@base_conditional('ENABLE_WAYLAND', '1', 'add_ozone_wayland_patches', '', d)}"
 
-LIC_FILES_CHKSUM = "file://LICENSE;md5=0fca02217a5d49a14dfe2d11837bb34d"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=537e0b52077bf0a616d0a0c8a79bc9d5"
 SRC_URI += "\
-        ${@bb.utils.contains('PACKAGECONFIG', 'ignore-lost-context', 'file://chromium-40/0001-Remove-accelerated-Canvas-support-from-blacklist.patch', '', d)} \
-        ${@bb.utils.contains('PACKAGECONFIG', 'impl-side-painting', 'file://chromium-40/0002-Add-Linux-to-impl-side-painting-whitelist.patch', '', d)} \
+        ${@bb.utils.contains('PACKAGECONFIG', 'ignore-lost-context', 'file://chromium-45/0001-Remove-accelerated-Canvas-support-from-blacklist.patch', '', d)} \
+        ${@bb.utils.contains('PACKAGECONFIG', 'impl-side-painting', 'file://chromium-45/0002-Add-Linux-to-impl-side-painting-whitelist.patch', '', d)} \
         ${@bb.utils.contains('PACKAGECONFIG', 'disable-api-keys-info-bar', 'file://chromium-40/0003-Disable-API-keys-info-bar.patch', '', d)} \
-        file://chromium-40/0004-Remove-hard-coded-values-for-CC-and-CXX.patch \
+        file://chromium-45/0004-Remove-hard-coded-values-for-CC-and-CXX.patch \
+        file://chromium-45/build_fixes_for_latest_oe_mater.patch \
         file://unistd-2.patch \
         file://fix_64_bit_builds.patch \
 "
-SRC_URI[md5sum] = "4d33f77537243369e6380f1458217761"
-SRC_URI[sha256sum] = "ad189ea35699224ed4e9cc84fe2dc4b60c5f4257b359e1757af098a6fbc36989"
+SRC_URI[md5sum] = "fa430c3694ea64da5f26c9bbb0059021"
+SRC_URI[sha256sum] = "3e8c03a5a6ea4cc35017404a58687ca18207eed70781bad7f2d7d70610934c91"
 
-SRC_URI[test-data.md5sum] = "047cfb627358ad3bc72c570c0e86b50b"
-SRC_URI[test-data.sha256sum] = "2222d737911c5cc09a35e7de2ff498752ceab4f4f0b96898589c7ddd182b4517"
+SRC_URI[test-data.md5sum] = "f717001e502167774d7147ea49d4abf3"
+SRC_URI[test-data.sha256sum] = "94577c27e9de9dd1c85d2e3ea4db5021ea7a6661f5615c2c91180104516b51b7"
 
 OZONE_WAYLAND_EXTRA_PATCHES += " \
 "
-OZONE_WAYLAND_GIT_BRANCH = "master"
-OZONE_WAYLAND_GIT_SRCREV = "b882fe21165fb64a3ea9ab71f5716ed79457ebf1"
+OZONE_WAYLAND_GIT_BRANCH = "Milestone-Trask"
+OZONE_WAYLAND_GIT_SRCREV = "d6ad1b8bb4e2c71427283ffc21ac8d66cb576730"
 # using 00*.patch to skip the WebRTC patches in ozone-wayland
 # the WebRTC patches remove X11 libraries from the linker flags, which is
 # already done by another patch (see above). Furthermore, to be able to use

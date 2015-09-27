@@ -1,0 +1,43 @@
+diff --git a/breakpad/src/client/linux/dump_writer_common/thread_info.h b/breakpad/src/client/linux/dump_writer_common/thread_info.h
+index a05ffea..df535a8 100644
+--- a/breakpad/src/client/linux/dump_writer_common/thread_info.h
++++ b/breakpad/src/client/linux/dump_writer_common/thread_info.h
+@@ -65,9 +65,8 @@ struct ThreadInfo {
+   struct user_regs regs;
+   struct user_fpregs fpregs;
+ #elif defined(__aarch64__)
+-  // Use the structures defined in <asm/ptrace.h>
+-  struct user_pt_regs regs;
+-  struct user_fpsimd_state fpregs;
++  struct user_regs_struct regs;
++  struct user_fpsimd_struct fpregs;
+ #elif defined(__mips__)
+   // Use the structure defined in <sys/ucontext.h>.
+   mcontext_t mcontext;
+diff --git a/third_party/boringssl/src/crypto/bio/socket_helper.c b/third_party/boringssl/src/crypto/bio/socket_helper.c
+index b1cdd1a..fcca649 100644
+--- a/third_party/boringssl/src/crypto/bio/socket_helper.c
++++ b/third_party/boringssl/src/crypto/bio/socket_helper.c
+@@ -12,8 +12,7 @@
+  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. */
+ 
+-#define _POSIX_SOURCE
+-
++#define _POSIX_C_SOURCE 200112L
+ #include <openssl/bio.h>
+ #include <openssl/err.h>
+ 
+diff --git a/ui/gfx/gfx.gyp b/ui/gfx/gfx.gyp
+index 71509a4..ab41b58 100644
+--- a/ui/gfx/gfx.gyp
++++ b/ui/gfx/gfx.gyp
+@@ -413,7 +413,7 @@
+             'vector_icons_public_h_file': '<(SHARED_INTERMEDIATE_DIR)/ui/gfx/vector_icons_public.h',
+           },
+           'include_dirs': [
+-            '<(SHARED_INTERMEDIATE_DIR)',
++            '<(SHARED_INTERMEDIATE_DIR)>',
+           ],
+           'sources': [
+             '<(vector_icons_cc_file)',

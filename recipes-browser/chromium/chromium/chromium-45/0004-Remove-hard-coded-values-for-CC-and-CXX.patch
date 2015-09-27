@@ -17,16 +17,16 @@ Signed-off-by: Carlos Rafael Giani <dv@pseudoterminal.org>
  build/common.gypi | 10 ----------
 
 diff --git a/build/common.gypi b/build/common.gypi
-index 6e4df91..f262a18 100644
+index 9b2e27c..9e65859 100644
 --- a/build/common.gypi
 +++ b/build/common.gypi
-@@ -6001,16 +6001,6 @@
+@@ -5976,16 +5976,6 @@
          ['CXX.host', '<(host_cxx)'],
        ],
      }],
 -    ['OS=="linux" and target_arch=="arm" and host_arch!="arm" and chromeos==0 and clang==0', {
--      # Set default ARM cross tools on linux.  These can be overridden
--      # using CC,CXX,CC.host and CXX.host environment variables.
+-      # Set default ARM cross compiling on linux.  These can be overridden
+-      # using CC/CXX/etc environment variables.
 -      'make_global_settings': [
 -        ['CC', '<!(which arm-linux-gnueabihf-gcc)'],
 -        ['CXX', '<!(which arm-linux-gnueabihf-g++)'],
@@ -34,6 +34,7 @@ index 6e4df91..f262a18 100644
 -        ['CXX.host', '<(host_cxx)'],
 -      ],
 -    }],
+ 
      # TODO(yyanagisawa): supports GENERATOR==make
      #  make generator doesn't support CC_wrapper without CC
-     #  in make_global_settings yet.
+
