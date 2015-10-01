@@ -85,11 +85,11 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=537e0b52077bf0a616d0a0c8a79bc9d5"
 SRC_URI += "\
         ${@bb.utils.contains('PACKAGECONFIG', 'ignore-lost-context', 'file://chromium-45/0001-Remove-accelerated-Canvas-support-from-blacklist.patch', '', d)} \
         ${@bb.utils.contains('PACKAGECONFIG', 'impl-side-painting', 'file://chromium-45/0002-Add-Linux-to-impl-side-painting-whitelist.patch', '', d)} \
-        ${@bb.utils.contains('PACKAGECONFIG', 'disable-api-keys-info-bar', 'file://chromium-40/0003-Disable-API-keys-info-bar.patch', '', d)} \
+        ${@bb.utils.contains('PACKAGECONFIG', 'disable-api-keys-info-bar', 'file://chromium-45/0003-Disable-API-keys-info-bar.patch', '', d)} \
         file://chromium-45/0004-Remove-hard-coded-values-for-CC-and-CXX.patch \
         file://chromium-45/build_fixes_for_latest_oe_mater.patch \
         file://unistd-2.patch \
-        file://fix_64_bit_builds.patch \
+        file://chromium-45/fix_64_bit_builds.patch \
 "
 SRC_URI[md5sum] = "fa430c3694ea64da5f26c9bbb0059021"
 SRC_URI[sha256sum] = "3e8c03a5a6ea4cc35017404a58687ca18207eed70781bad7f2d7d70610934c91"
