@@ -1,0 +1,23 @@
+From 1e382d71dc1dfff24f654357bf1b626bed0b1eb5 Mon Sep 17 00:00:00 2001
+From: Zoltan Kuscsik <zoltan.kuscsik@linaro.org>
+Date: Thu, 1 Oct 2015 12:29:56 +0200
+Subject: [PATCH] Fix media includes for ozone builds
+
+---
+diff --git a/content/common/gpu/media/gpu_video_decode_accelerator.cc b/content/common/gpu/media/gpu_video_decode_accelerator.cc
+index 5f6ea2a..0b98687 100644
+--- a/content/common/gpu/media/gpu_video_decode_accelerator.cc
++++ b/content/common/gpu/media/gpu_video_decode_accelerator.cc
+@@ -41,8 +41,7 @@
+ #include "ui/gl/gl_implementation.h"
+ #endif
+ #elif defined(USE_OZONE)
+-#include "content/common/gpu/media/vaapi_video_decode_accelerator.h"
+-#include "ui/gl/gl_implementation.h"
++#include "media/ozone/media_ozone_platform.h"
+ #elif defined(OS_ANDROID)
+ #include "content/common/gpu/media/android_video_decode_accelerator.h"
+ #endif
+-- 
+1.9.1
+

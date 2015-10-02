@@ -135,6 +135,11 @@ python add_ozone_wayland_patches() {
     # then, add the extra patches to SRC_URI order matters;
     # extra patches may depend on the base ozone-wayland ones
     d.appendVar('SRC_URI', ' ' + d.getVar('OZONE_WAYLAND_EXTRA_PATCHES'))
+    # For ARM architecture we need to reverse one of the VAAPI patches.
+    # This is patch should be removed once the upstream wayland-ozone
+    # gets a fix for this.
+    if d.getVar('TARGET_ARCH', True) == 'arm':
+        d.appendVar('SRC_URI', 'file://chromium-45/0001-Fix-media-includes-for-ozone-builds.patch');
 }
 
 EXTRA_OEGYP =	" \
