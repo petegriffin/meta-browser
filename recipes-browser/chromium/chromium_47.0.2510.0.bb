@@ -90,7 +90,7 @@ SRC_URI += "\
         ${@bb.utils.contains('PACKAGECONFIG', 'disable-api-keys-info-bar', 'file://chromium-45/0003-Disable-API-keys-info-bar.patch', '', d)} \
         file://chromium-45/0004-Remove-hard-coded-values-for-CC-and-CXX.patch \
         file://unistd-2.patch \
-        file://fix_64_bit_builds.patch \
+        file://chromium-45/fix_64_bit_builds.patch \
 "
 SRC_URI[md5sum] = "4d33f77537243369e6380f1458217761"
 SRC_URI[sha256sum] = "ad189ea35699224ed4e9cc84fe2dc4b60c5f4257b359e1757af098a6fbc36989"
