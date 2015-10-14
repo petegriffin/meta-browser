@@ -17,6 +17,7 @@
 #    * CHROMIUM_WAYLAND_GYP_DEFINES
 
 include chromium.inc
+
 DESCRIPTION = "Chromium browser"
 DEPENDS += "libgnome-keyring"
 SRC_URI = "\
@@ -28,6 +29,7 @@ SRC_URI = "\
         file://google-chrome.desktop \
         ${@bb.utils.contains('PACKAGECONFIG', 'test-data', 'http://gsdview.appspot.com/chromium-browser-official/${P}-testdata.tar.xz;name=test-data', '', d)} \
 "
+
 
 #
 # * use-egl : Without this packageconfig, the Chromium build will use GLX for creating an OpenGL context in X11,
@@ -56,9 +58,13 @@ SRC_URI = "\
 # * impl-side-painting : This is a new painting mechanism. Still in development stages, it can improve performance.
 #                        See http://www.chromium.org/developers/design-documents/impl-side-painting for more.
 #                        Off by default.
-
+#
+# * use-ocdm : Enable OpenCDM. Open CDM is an open source CDM module for Encrypted Media Extensions
+#
 # conditionally add ozone-wayland and its patches to the Chromium sources
 PACKAGECONFIG ??= "test-data"
+
+include ocdm.inc
 
 ENABLE_X11 = "${@base_contains('DISTRO_FEATURES', 'x11', '1', '0', d)}"
 # only enable Wayland if X11 isn't already enabled
@@ -149,6 +155,7 @@ EXTRA_OEGYP =	" \
 	-Ddisable_fatal_linker_warnings=1 \
 	${@base_contains('DISTRO_FEATURES', 'ld-is-gold', '', '-Dlinux_use_gold_binary=0', d)} \
 	${@base_contains('DISTRO_FEATURES', 'ld-is-gold', '', '-Dlinux_use_gold_flags=0', d)} \
+	${@base_contains('PACKAGECONFIG', 'use-ocdm', '-Dplayready=1', '', d)} \
 	-I ${WORKDIR}/oe-defaults.gypi \
 	-I ${WORKDIR}/include.gypi \
 	${@bb.utils.contains('PACKAGECONFIG', 'component-build', '-I ${WORKDIR}/component-build.gypi', '', d)} \
