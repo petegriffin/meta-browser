@@ -5,6 +5,7 @@ SRC_URI += "${@bb.utils.contains('PACKAGECONFIG', 'use-ocdm', '\
       git://github.com/kuscsik/linaro-cdm.git;protocol=https;branch=${OCDM_GIT_BRANCH};name=ocdm;destsuffix=${OCDM_DESTSUFIX}\
     ', '', d)}"
 SRCREV_ocdm = "${AUTOREV}"
+DEPENDS_append = " ${@bb.utils.contains('PACKAGECONFIG', 'use-ocdm', 'ocdmi', '', d)} "
 
 python add_ocdm_patches() {
     import glob
