@@ -1,19 +1,19 @@
-OCDM_GIT_BRANCH="playready_demo"
+OCDM_GIT_BRANCH="master"
 OCDM_DESTSUFIX="ocdm"
 
 SRC_URI += "${@bb.utils.contains('PACKAGECONFIG', 'use-ocdm', '\
-      git://github.com/linaro-home/open-content-decryption-module.git;protocol=https;branch=${OCDM_GIT_BRANCH};name=ocdm;destsuffix=${OCDM_DESTSUFIX}\
+      git://github.com/kuscsik/linaro-cdm.git;protocol=https;branch=${OCDM_GIT_BRANCH};name=ocdm;destsuffix=${OCDM_DESTSUFIX}\
     ', '', d)}"
 SRCREV_ocdm = "${AUTOREV}"
 
 python add_ocdm_patches() {
     import glob
     srcdir = d.getVar('WORKDIR', True)
-    d.appendVar('SRC_URI', "file://" + srcdir + "/ocdm/patch/Add_support_for_Playready_Keysystem.patch")
+    d.appendVar('SRC_URI', "file://" + srcdir + "/ocdm/patch/add_ocdm_keyssystems.patch")
 }
 
 copy_ocdm_files() {
-    cp -r ${WORKDIR}/ocdm/src ${S}/media/cdm/ppapi/external_open_cdm
+    cp -r ${WORKDIR}/ocdm ${S}/media/cdm/ppapi/external_open_cdm
 }
 
 do_patch[prefuncs] += "${@bb.utils.contains('PACKAGECONFIG', 'use-ocdm', 'add_ocdm_patches', '', d)}"
@@ -32,5 +32,4 @@ do_install_append() {
         install -Dm 0755 ${B}/out/${CHROMIUM_BUILD_TYPE}/libopencdm.so \
             ${D}${libdir}/${BPN}/libopencdm.so
     fi
-
 }
