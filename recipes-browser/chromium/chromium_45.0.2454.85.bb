@@ -97,6 +97,15 @@ SRC_URI += "\
         file://unistd-2.patch \
         file://chromium-45/fix_64_bit_builds.patch \
 "
+
+# Workaround for Chromium bug #545904
+# https://code.google.com/p/chromium/issues/detail?id=545904 
+# based on patch: 
+# https://codereview.chromium.org/1421523002/ 
+SRC_URI += "\
+	file://chromium-45/fix_mesa_GL_RED_support_detection.patch \
+"
+
 SRC_URI[md5sum] = "fa430c3694ea64da5f26c9bbb0059021"
 SRC_URI[sha256sum] = "3e8c03a5a6ea4cc35017404a58687ca18207eed70781bad7f2d7d70610934c91"
 

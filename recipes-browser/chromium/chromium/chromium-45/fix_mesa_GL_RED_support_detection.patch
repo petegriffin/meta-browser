@@ -1,0 +1,27 @@
+diff --git a/gpu/command_buffer/service/feature_info.cc b/gpu/command_buffer/service/feature_info.cc
+index 0ce9980..f5c32ce 100644
+--- a/gpu/command_buffer/service/feature_info.cc
++++ b/gpu/command_buffer/service/feature_info.cc
+@@ -230,6 +230,8 @@ bool IsGL_REDSupportedOnFBOs() {
+   // this, we try it, and if it fails, we don't expose GL_EXT_texture_rg.
+   GLint fb_binding = 0;
+   GLint tex_binding = 0;
++  bool result;
++
+   glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fb_binding);
+   glGetIntegerv(GL_TEXTURE_BINDING_2D, &tex_binding);
+ 
+@@ -244,8 +246,13 @@ bool IsGL_REDSupportedOnFBOs() {
+   glBindFramebufferEXT(GL_FRAMEBUFFER, textureFBOID);
+   glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+                             textureId, 0);
+-  bool result =
++
++  if(glGetError() != GL_NO_ERROR)
++    result = false;
++  else
++    result =
+       glCheckFramebufferStatusEXT(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_UNSUPPORTED;
++
+   glDeleteFramebuffersEXT(1, &textureFBOID);
+   glDeleteTextures(1, &textureId);
