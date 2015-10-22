@@ -1,0 +1,37 @@
+diff --git a/chrome/chrome_browser_ui.gypi b/chrome/chrome_browser_ui.gypi
+index a3ac696..6b25650 100644
+--- a/chrome/chrome_browser_ui.gypi
++++ b/chrome/chrome_browser_ui.gypi
+@@ -2767,7 +2767,7 @@
+         '../content/content.gyp:content_browser',
+         '../content/content.gyp:content_common',
+         '../crypto/crypto.gyp:crypto',
+-        '../ozone/ui/webui/webui.gypi:webui',
++        '../ozone/ozone_impl.gyp:webui',
+         '../skia/skia.gyp:skia',
+         '../sync/sync.gyp:sync',
+         '../third_party/cacheinvalidation/cacheinvalidation.gyp:cacheinvalidation',
+diff --git a/ozone/ozone_impl.gyp b/ozone/ozone_impl.gyp
+index c44ce53..b65d0f4 100644
+--- a/ozone/ozone_impl.gyp
++++ b/ozone/ozone_impl.gyp
+@@ -4,6 +4,9 @@
+ # found in the LICENSE file.
+ 
+ {
++   'includes': [
++     'ui/ui.gypi',
++   ],
+   'targets': [
+     {
+       'target_name': 'wayland',
+@@ -17,9 +20,6 @@
+       'include_dirs': [
+         '..',
+       ],
+-      'includes': [
+-        'ui/ui.gypi',
+-      ],
+       'defines': [
+         'OZONE_WAYLAND_IMPLEMENTATION',
+       ],

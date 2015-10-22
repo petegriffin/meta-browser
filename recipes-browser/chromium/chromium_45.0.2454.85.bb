@@ -154,7 +154,15 @@ python add_ozone_wayland_patches() {
     # This is patch should be removed once the upstream wayland-ozone
     # gets a fix for this.
     if d.getVar('TARGET_ARCH', True) == 'arm':
-        d.appendVar('SRC_URI', 'file://chromium-45/0001-Fix-media-includes-for-ozone-builds.patch');
+        d.appendVar('SRC_URI', ' file://chromium-45/0001-Fix-media-includes-for-ozone-builds.patch ');
+    # The following patch is a workaround for the GYP generator issue
+    # URL: https://bugs.linaro.org/show_bug.cgi?id=1825
+    # While the patch fixes the issue in a correct way it is still a
+    # dirty approach placing it here, since we applying this patch
+    # on a line in chrome_browser_ui.gypi that was patches in one
+    # of the wayland patches above. The issue must be fixed permanently
+    # in wayland ozone upstream.
+    d.appendVar('SRC_URI', ' file://chromium-45/dirty_fix_of_gyp_generator_issue.patch ');
 }
 
 EXTRA_OEGYP =	" \
