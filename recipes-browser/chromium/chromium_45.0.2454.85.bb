@@ -64,6 +64,8 @@ SRC_URI = "\
 # conditionally add ozone-wayland and its patches to the Chromium sources
 PACKAGECONFIG ??= "test-data"
 
+ENABLE_OCDM = "${@bb.utils.contains('PACKAGECONFIG', 'use-ocdm', '1', '0', d)}"
+
 include ocdm.inc
 
 ENABLE_X11 = "${@base_contains('DISTRO_FEATURES', 'x11', '1', '0', d)}"
@@ -202,6 +204,11 @@ python() {
     if d.getVar('ENABLE_WAYLAND', True) == '1':
         d.appendVar('DEPENDS', ' %s ' % d.getVar('CHROMIUM_WAYLAND_DEPENDS', True))
         d.appendVar('GYP_DEFINES', ' %s ' % d.getVar('CHROMIUM_WAYLAND_GYP_DEFINES', True))
+
+    if d.getVar('ENABLE_WAYLAND', True) == '1':
+        d.appendVar('GYP_DEFINES', ' %s ' % d.getVar('CHROMIUM_OCDM_GYP_DEFINES', True))
+
+
 }
 
 do_configure_append() {

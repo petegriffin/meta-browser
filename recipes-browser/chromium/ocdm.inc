@@ -7,6 +7,8 @@ SRC_URI += "${@bb.utils.contains('PACKAGECONFIG', 'use-ocdm', '\
 SRCREV_ocdm = "${AUTOREV}"
 DEPENDS_append = " ${@bb.utils.contains('PACKAGECONFIG', 'use-ocdm', 'ocdmi', '', d)} "
 
+
+CHROMIUM_OCDM_GYP_DEFINES = "enable_pepper_cdm=1"
 python add_ocdm_patches() {
     import glob
     srcdir = d.getVar('WORKDIR', True)
