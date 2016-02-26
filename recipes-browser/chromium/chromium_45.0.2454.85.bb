@@ -172,7 +172,7 @@ EXTRA_OEGYP =	" \
 	-Ddisable_fatal_linker_warnings=1 \
 	${@base_contains('DISTRO_FEATURES', 'ld-is-gold', '', '-Dlinux_use_gold_binary=0', d)} \
 	${@base_contains('DISTRO_FEATURES', 'ld-is-gold', '', '-Dlinux_use_gold_flags=0', d)} \
-	${@base_contains('PACKAGECONFIG', 'use-ocdm', '-Dplayready=1', '', d)} \
+	${@base_contains('PACKAGECONFIG', 'use-playready', '-Dplayready=1', '', d)} \
 	-I ${WORKDIR}/oe-defaults.gypi \
 	-I ${WORKDIR}/include.gypi \
 	${@bb.utils.contains('PACKAGECONFIG', 'component-build', '-I ${WORKDIR}/component-build.gypi', '', d)} \
