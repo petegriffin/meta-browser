@@ -150,7 +150,7 @@ python add_ozone_wayland_patches() {
         d.appendVar('SRC_URI', ' file://' + upstream_patch)
     # then, add the extra patches to SRC_URI order matters;
     # extra patches may depend on the base ozone-wayland ones
-    d.appendVar('SRC_URI', ' ' + d.getVar('OZONE_WAYLAND_EXTRA_PATCHES'))
+    d.appendVar('SRC_URI', ' ' + d.getVar('OZONE_WAYLAND_EXTRA_PATCHES', False))
     # For ARM architecture we need to reverse one of the VAAPI patches.
     # This is patch should be removed once the upstream wayland-ozone
     # gets a fix for this.
