@@ -99,6 +99,7 @@ SRC_URI += "\
         file://chromium-45/fix_64_bit_builds.patch \
         file://chromium-45/0011-Replace-readdir_r-with-readdir.patch \
 	file://chromium-45/remove-Werror.patch \
+        file://chromium-45/Remove-base-internal-InotifyReaders-destructor.patch \
 "
 
 # Workaround for Chromium bug #545904
