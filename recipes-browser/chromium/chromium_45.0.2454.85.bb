@@ -97,6 +97,10 @@ SRC_URI += "\
         file://chromium-45/build_fixes_for_latest_oe_mater.patch \
         file://unistd-2.patch \
         file://chromium-45/fix_64_bit_builds.patch \
+        file://chromium-45/0011-Replace-readdir_r-with-readdir.patch \
+	file://chromium-45/remove-Werror.patch \
+        file://chromium-45/Remove-base-internal-InotifyReaders-destructor.patch \
+        file://chromium-45/Ozone-Fix-clang-build.patch \
 "
 
 # Workaround for Chromium bug #545904

@@ -1,0 +1,14 @@
+Index: ui/events/ozone/evdev/touch_evdev_debug_buffer.h
+diff --git a/ui/events/ozone/evdev/touch_evdev_debug_buffer.h b/ui/events/ozone/evdev/touch_evdev_debug_buffer.h
+index 673a45467adeae6ba6bf296059f18f8214033bba..eecae30efee4c0f5af2f16aea753760ad0f6a91d 100644
+--- a/ui/events/ozone/evdev/touch_evdev_debug_buffer.h
++++ b/ui/events/ozone/evdev/touch_evdev_debug_buffer.h
+@@ -6,6 +6,8 @@
+ #define UI_EVENTS_OZONE_EVDEV_TOUCH_DEBUG_BUFFER_H_
+ 
+ #include <linux/input.h>
++
++#include <string>
+ #include <vector>
+ 
+ #include "base/memory/scoped_ptr.h"
