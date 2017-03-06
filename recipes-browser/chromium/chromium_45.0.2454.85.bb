@@ -100,6 +100,7 @@ SRC_URI += "\
         file://chromium-45/0011-Replace-readdir_r-with-readdir.patch \
 	file://chromium-45/remove-Werror.patch \
         file://chromium-45/Remove-base-internal-InotifyReaders-destructor.patch \
+        file://chromium-45/Do-not-depend-on-Linux-4.5.patch \
         file://chromium-45/Ozone-Fix-clang-build.patch \
 "
 
