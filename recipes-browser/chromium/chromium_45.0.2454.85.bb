@@ -67,10 +67,10 @@ PACKAGECONFIG ??= "test-data"
 
 include ocdm.inc
 
-ENABLE_X11 = "${@base_contains('DISTRO_FEATURES', 'x11', '1', '0', d)}"
+ENABLE_X11 = "${@bb.utils.contains('DISTRO_FEATURES', 'x11', '1', '0', d)}"
 # only enable Wayland if X11 isn't already enabled
-ENABLE_WAYLAND = "${@base_contains('DISTRO_FEATURES', 'x11', '0', \
-                     base_contains('DISTRO_FEATURES', 'wayland', '1', \
+ENABLE_WAYLAND = "${@bb.utils.contains('DISTRO_FEATURES', 'x11', '0', \
+                     bb.utils.contains('DISTRO_FEATURES', 'wayland', '1', \
                      '0', d),d)}"
 
 # variable for extra ozone-wayland patches, typically extended by BSP layer .bbappends
@@ -176,9 +176,9 @@ EXTRA_OEGYP =	" \
 	-Dclang=0 \
 	-Dhost_clang=0 \
 	-Ddisable_fatal_linker_warnings=1 \
-	${@base_contains('DISTRO_FEATURES', 'ld-is-gold', '', '-Dlinux_use_gold_binary=0', d)} \
-	${@base_contains('DISTRO_FEATURES', 'ld-is-gold', '', '-Dlinux_use_gold_flags=0', d)} \
-	${@base_contains('PACKAGECONFIG', 'use-playready', '-Dplayready=1', '', d)} \
+	${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', '', '-Dlinux_use_gold_binary=0', d)} \
+	${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', '', '-Dlinux_use_gold_flags=0', d)} \
+	${@bb.utils.contains('PACKAGECONFIG', 'use-playready', '-Dplayready=1', '', d)} \
 	-I ${WORKDIR}/oe-defaults.gypi \
 	-I ${WORKDIR}/include.gypi \
 	${@bb.utils.contains('PACKAGECONFIG', 'component-build', '-I ${WORKDIR}/component-build.gypi', '', d)} \
