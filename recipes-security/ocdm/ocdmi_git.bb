@@ -12,7 +12,7 @@ SRCREV_pn-ocdmi ?= "${AUTOREV}"
 
 S = "${WORKDIR}/git"
 
-EXTRA_OECONF_append = "${@base_contains('MACHINE_FEATURES', 'optee', '--enable-aes-ta', '', d)} "
+EXTRA_OECONF_append = "${@bb.utils.contains('MACHINE_FEATURES', 'optee', '--enable-aes-ta', '', d)} "
 
 # * use-playready : Enables support for Playready CDMI.
 #
@@ -20,11 +20,11 @@ EXTRA_OECONF_append = "${@base_contains('MACHINE_FEATURES', 'optee', '--enable-a
 
 DEPENDS_append = " openssl portmap"
 
-DEPENDS_append = "${@base_contains('MACHINE_FEATURES','optee',' optee-aes-decryptor ','',d)}"
+DEPENDS_append = "${@bb.utils.contains('MACHINE_FEATURES','optee',' optee-aes-decryptor ','',d)}"
 
 # Only ClearKey implementation depends on ssl
 DEPENDS_remove = " \
-  ${@base_contains('PACKAGECONFIG','use-playready','openssl','',d)} \
+  ${@bb.utils.contains('PACKAGECONFIG','use-playready','openssl','',d)} \
   "
 
 inherit autotools
