@@ -38,6 +38,8 @@ SRC_URI += " \
         file://0033-ozone-wayland-Fix-software-rendering.patch \
         file://0034-ozone-wayland-Return-primary-display-on-null-window.patch \
         file://0035-ozone-Implement-single-window-tab-dragging.patch \
+        file://0001-generic_v4l2_device-allow-NV12-YVU420-on-all-ARM-pla.patch \
+        file://0001-media-default_decoder_factory-create-GpuVideoDecoder.patch \
 "
 
 # Chromium can use v4l2 device for hardware accelerated video decoding. Make sure that
