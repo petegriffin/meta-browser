@@ -19,6 +19,8 @@ SRC_URI += " \
         file://0014-Reland-ozone-common-Make-gbm_wrapper-to-be-compiled-.patch \
         file://0015-Add-support-for-V4L2VDA-on-Linux.patch \
         file://0016-Add-mmap-via-libv4l-to-generic_v4l2_device.patch \
+        file://0001-generic_v4l2_device-allow-NV12-YVU420-on-all-ARM-pla.patch \
+        file://0001-media-default_decoder_factory-create-GpuVideoDecoder.patch \
 "
 
 # Chromium can use v4l2 device for hardware accelerated video decoding. Make sure that
