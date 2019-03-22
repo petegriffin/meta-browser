@@ -37,7 +37,7 @@ SRC_URI += " \
 
 # Chromium can use v4l2 device for hardware accelerated video decoding. Make sure that
 # /dev/video-dec exists.
-PACKAGECONFIG[use-linux-v4l2] = "use_v4l2_codec=true use_v4lplugin=true use_linux_v4l2_only=true"
+PACKAGECONFIG[use-linux-v4l2] = "use_v4l2_codec=true use_linux_v4l2_only=true"
 
 GN_ARGS += "\
         ${PACKAGECONFIG_CONFARGS} \
