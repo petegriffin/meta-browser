@@ -45,6 +45,7 @@ SRC_URI += " \
         file://0040-ozone-wayland-Support-NumLock-in-non-chromeos-builds.patch \
         file://0041-ozone-xkbcommon-Pre-compute-masks-when-setting-keyma.patch \
         file://0042-ozone-wayland-Use-opaque-region-for-opaque-windows.patch \
+        file://0001-generic_v4l2_device-allow-NV12-YVU420-on-all-ARM-pla.patch \
 "
 
 # Chromium can use v4l2 device for hardware accelerated video decoding. Make sure that
