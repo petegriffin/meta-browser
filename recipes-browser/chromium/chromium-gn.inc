@@ -74,7 +74,7 @@ COMPATIBLE_MACHINE_armv7ve = "(.*)"
 COMPATIBLE_MACHINE_x86 = "(.*)"
 COMPATIBLE_MACHINE_x86-64 = "(.*)"
 
-PACKAGECONFIG ??= "use-egl"
+PACKAGECONFIG ??= "use-egl proprietary-codecs use-linux-v4l2"
 
 # this makes sure the dependencies for the EGL mode are present; otherwise, the configure scripts
 # automatically and silently fall back to GLX
