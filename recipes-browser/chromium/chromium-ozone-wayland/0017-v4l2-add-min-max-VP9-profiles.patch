@@ -1,0 +1,28 @@
+From 7eb43809cc0954ff476599d2a9dbeafbb6df3a46 Mon Sep 17 00:00:00 2001
+From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Date: Tue, 26 Mar 2019 12:12:18 +0200
+Subject: [PATCH] v4l2: add min/max VP9 profiles
+
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+---
+ media/gpu/v4l2/v4l2_device.cc | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/media/gpu/v4l2/v4l2_device.cc b/media/gpu/v4l2/v4l2_device.cc
+index e3c0c2fcbcb9..c829e0cb1ef6 100644
+--- a/media/gpu/v4l2/v4l2_device.cc
++++ b/media/gpu/v4l2/v4l2_device.cc
+@@ -1012,6 +1012,10 @@ std::vector<VideoCodecProfile> V4L2Device::V4L2PixFmtToVideoCodecProfiles(
+       break;
+     }
+ #endif
++    case V4L2_PIX_FMT_VP9:
++      min_profile = VP9PROFILE_MIN;
++      max_profile = VP9PROFILE_MAX;
++      break;
+ 
+     default:
+       VLOGF(1) << "Unhandled pixelformat " << FourccToString(pix_fmt);
+-- 
+2.17.1
+
