@@ -1,6 +1,9 @@
 require chromium-upstream-tarball.inc
 require chromium-gn.inc
 
+#TOOLCHAIN_pn-chromium-ozone-wayland="clang"
+TOOLCHAIN="clang"
+
 SRC_URI += " \
         file://0001-minigbm-add-MINIGBM-define.patch \
         file://0001-ozone-wayland-Use-nearest-to-origin-display-as-a-pri.patch \
